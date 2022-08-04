@@ -8,8 +8,8 @@ rust_binary(
 rust_binary(
     name = "my_rust_binary",
     srcs = ["my_rust_binary.rs"],
+    visibility = ["//tests:__pkg__"],
     deps = [
         "//mylib",
     ],
-    visibility = ["//tests:__pkg__"],
 )

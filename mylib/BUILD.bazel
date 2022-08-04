@@ -17,6 +17,7 @@ rust_test_suite(
     srcs = glob(["tests/**/*.rs"]),
     deps = [":mylib"],
 )
+
 # Or
 # 2) individually specify
 rust_test(

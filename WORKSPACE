@@ -10,12 +10,19 @@ http_archive(
         "https://github.com/bazelbuild/rules_rust/releases/download/0.7.0/rules_rust-v0.7.0.tar.gz",
     ],
 )
+
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
+
 rules_rust_dependencies()
-rust_register_toolchains(version = "1.55.0", edition="2018")
+
+rust_register_toolchains(
+    edition = "2018",
+    version = "1.55.0",
+)
 
 # External crates.io crates:
 load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository", "render_config")
+
 crates_repository(
     name = "crate_index",
     # Update this using:
@@ -33,5 +40,7 @@ crates_repository(
         default_package_name = "",
     ),
 )
+
 load("@crate_index//:defs.bzl", "crate_repositories")
+
 crate_repositories()

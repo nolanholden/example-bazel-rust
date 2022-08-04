@@ -7,17 +7,16 @@ test_suite(
 rust_test(
     name = "all_tests",
     srcs = ["all_tests.rs"],
+    # rust binary:
+    # Note: example use of runfiles:
+    # https://github.com/bazelbuild/rules_rust/blob/c97f255dfe23107670fb5193ecc0e6e31045285c/examples/hello_runfiles/BUILD.bazel#L22
+    data = ["//:my_rust_binary"],
     deps = [
         # (local) rust lib:
         "//mylib",
         # (external) crates.io crate
         "@crate_index//:tempfile",
-        #
         # runfiles not needed in this case, since the binary is already in the path.
         # "@rules_rust//tools/runfiles",
     ],
-    # rust binary:
-    # Note: example use of runfiles:
-    # https://github.com/bazelbuild/rules_rust/blob/c97f255dfe23107670fb5193ecc0e6e31045285c/examples/hello_runfiles/BUILD.bazel#L22
-    data = ["//:my_rust_binary"],
 )
