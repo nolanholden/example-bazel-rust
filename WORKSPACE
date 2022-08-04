@@ -13,3 +13,25 @@ http_archive(
 load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_register_toolchains")
 rules_rust_dependencies()
 rust_register_toolchains(version = "1.55.0", edition="2018")
+
+# External crates.io crates:
+load("@rules_rust//crate_universe:defs.bzl", "crate", "crates_repository", "render_config")
+crates_repository(
+    name = "crate_index",
+    # Update this using:
+    # `CARGO_BAZEL_REPIN=true bazel sync --only=crate_index`
+    cargo_lockfile = "//:Cargo.Bazel.lock",
+    packages = {
+        "tempfile": crate.spec(
+            version = "3.3.0",
+        ),
+    },
+    # Setting the default package name to `""` forces the use of the macros defined in this repository
+    # to always use the root package when looking for dependencies or aliases. This should be considered
+    # optional as the repository also exposes alises for easy access to all dependencies.
+    render_config = render_config(
+        default_package_name = "",
+    ),
+)
+load("@crate_index//:defs.bzl", "crate_repositories")
+crate_repositories()

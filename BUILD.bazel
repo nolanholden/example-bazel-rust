@@ -6,9 +6,10 @@ rust_binary(
 )
 
 rust_binary(
-    name = "local",
-    srcs = ["local.rs"],
+    name = "my_rust_binary",
+    srcs = ["my_rust_binary.rs"],
     deps = [
         "//mylib",
     ],
+    visibility = ["//tests:__pkg__"],
 )

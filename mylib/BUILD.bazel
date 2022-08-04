@@ -1,0 +1,26 @@
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test", "rust_test_suite")
+
+rust_library(
+    name = "mylib",
+    srcs = ["mylib.rs"],
+    visibility = ["//visibility:public"],
+)
+
+test_suite(
+    name = "tests",
+)
+
+# Two options to specify test targets:
+# 1) glob def tests per .rs file:
+rust_test_suite(
+    name = "rust_tests",
+    srcs = glob(["tests/**/*.rs"]),
+    deps = [":mylib"],
+)
+# Or
+# 2) individually specify
+rust_test(
+    name = "mylib_test1",
+    srcs = ["tests/mylib_test1.rs"],
+    deps = [":mylib"],
+)
