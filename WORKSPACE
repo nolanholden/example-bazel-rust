@@ -16,8 +16,8 @@ load("@rules_rust//rust:repositories.bzl", "rules_rust_dependencies", "rust_regi
 rules_rust_dependencies()
 
 rust_register_toolchains(
-    edition = "2018",
-    version = "1.55.0",
+    edition = "2021",
+    version = "1.62.1",
 )
 
 # External crates.io crates:
