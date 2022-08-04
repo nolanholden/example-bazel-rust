@@ -1,2 +1,3 @@
 bazel-*
 *.rlib
+rust-project.json

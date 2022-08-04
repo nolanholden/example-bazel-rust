@@ -4,10 +4,10 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # https://github.com/bazelbuild/rules_rust/releases
 http_archive(
     name = "rules_rust",
-    sha256 = "7fb9b4fe1a6fb4341bdf7c623e619460ecc0f52d5061cc56abc750111fba8a87",
+    sha256 = "05e15e536cc1e5fd7b395d044fc2dabf73d2b27622fbc10504b7e48219bb09bc",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_rust/releases/download/0.7.0/rules_rust-v0.7.0.tar.gz",
-        "https://github.com/bazelbuild/rules_rust/releases/download/0.7.0/rules_rust-v0.7.0.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_rust/releases/download/0.8.1/rules_rust-v0.8.1.tar.gz",
+        "https://github.com/bazelbuild/rules_rust/releases/download/0.8.1/rules_rust-v0.8.1.tar.gz",
     ],
 )
 
@@ -17,6 +17,7 @@ rules_rust_dependencies()
 
 rust_register_toolchains(
     edition = "2021",
+    include_rustc_srcs = True,
     version = "1.62.1",
 )
 
@@ -44,3 +45,34 @@ crates_repository(
 load("@crate_index//:defs.bzl", "crate_repositories")
 
 crate_repositories()
+
+# Help out rust-analyzer
+load("@rules_rust//tools/rust_analyzer:deps.bzl", "rust_analyzer_deps")
+
+rust_analyzer_deps()
+# and add .vscode/tasks.json
+#
+# // Reference:
+# // https://bazelbuild.github.io/rules_rust/rust_analyzer.html
+# {
+#     "version": "2.0.0",
+#     "tasks": [
+#         {
+#             "label": "Generate rust-project.json",
+#             "command": "bazel",
+#             "args": ["run", "@rules_rust//tools/rust_analyzer:gen_rust_project"],
+#             "options": {
+#                 "cwd": "${workspaceFolder}"
+#             },
+#             "group": "build",
+#             "problemMatcher": [],
+#             "presentation": {
+#                 "reveal": "never",
+#                 "panel": "dedicated",
+#             },
+#             "runOptions": {
+#                 "runOn": "folderOpen"
+#             }
+#         },
+#     ]
+# }
